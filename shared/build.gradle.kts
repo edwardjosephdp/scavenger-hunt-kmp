@@ -1,9 +1,12 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
 
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.buildkonfig)
 }
 
 kotlin {
@@ -49,6 +52,17 @@ kotlin {
             implementation(libs.ktor.client.darwin)
             implementation(libs.native.driver)
         }
+    }
+}
+
+/* NOTE: Kotlin Multiplatform <-> Android Gradle Plugin compatibility issue MIN=7.0 MAX=8.2
+*  To suppress this message add 'kotlin.mpp.androidGradlePluginCompatibility.nowarn=true' to your gradle.properties
+* */
+buildkonfig {
+    packageName = "com.oddguild.scavengerai"
+    defaultConfigs {
+        buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://generativelanguage.googleapis.com")
+        buildConfigField(FieldSpec.Type.STRING, "GEMINI_API_KEY", "AIzaSyCw-NC9qkjF2abvzIdIfYq4SRY26jz0u2s")
     }
 }
 
