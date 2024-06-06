@@ -1,4 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -62,7 +63,7 @@ buildkonfig {
     packageName = "com.oddguild.scavengerai"
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://generativelanguage.googleapis.com")
-        buildConfigField(FieldSpec.Type.STRING, "GEMINI_API_KEY", "AIzaSyCw-NC9qkjF2abvzIdIfYq4SRY26jz0u2s")
+        buildConfigField(FieldSpec.Type.STRING, "GEMINI_API_KEY", getLocalProperty("gemini_api_key", project))
     }
 }
 
@@ -76,4 +77,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
+
+fun getLocalProperty(key: String, project: Project): String {
+    val localProperties = Properties()
+    val localPropertiesFile = project.rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(localPropertiesFile.inputStream())
+    }
+    return localProperties.getProperty(key) ?: ""
 }
