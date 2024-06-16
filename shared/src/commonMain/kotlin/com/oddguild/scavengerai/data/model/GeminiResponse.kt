@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class GeminiResponse(
     @SerialName("candidates") val candidates: List<Candidate> = emptyList(),
     @SerialName("usageMetadata") val usageMetadata: UsageMetadata,
-    @SerialName("error") val error: Error? = null,
+    @SerialName("error") val error: Error? = null
 ) {
     fun getText(): String? = candidates.firstOrNull()?.content?.parts?.firstOrNull()?.text
 }
@@ -59,7 +59,7 @@ data class SafetyRating(
 
 @Serializable
 data class Error(
-    @SerialName("code") val code: Int,
+    @SerialName("result") val result: String,
     @SerialName("message") val message: String,
-    @SerialName("status") val status: String
+    @SerialName("reason") val reason: String
 )
