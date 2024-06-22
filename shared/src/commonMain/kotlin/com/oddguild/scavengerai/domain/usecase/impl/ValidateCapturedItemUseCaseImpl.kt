@@ -1,15 +1,15 @@
 package com.oddguild.scavengerai.domain.usecase.impl
 
 import com.oddguild.scavengerai.domain.repository.GeminiRepository
-import com.oddguild.scavengerai.domain.usecase.ValidateCapturedItem
+import com.oddguild.scavengerai.domain.usecase.ValidateCapturedItemUseCase
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
-class ValidateCapturedItemImpl(
+class ValidateCapturedItemUseCaseImpl(
     private val repository: GeminiRepository
-): ValidateCapturedItem {
+): ValidateCapturedItemUseCase {
     override suspend fun invoke(item: String, image: List<ByteArray>): Boolean {
         val prompt = """You are a scavenger hunt game where objects are found by taking a photo of them. 
             You have been given the item "$item" and a photo of the item. 
