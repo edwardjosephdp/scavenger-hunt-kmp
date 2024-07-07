@@ -1,10 +1,11 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.konan.target.Family
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.buildkonfig)
@@ -27,6 +28,8 @@ kotlin {
         it.binaries.framework {
             baseName = "shared"
             isStatic = true
+            export(libs.decompose.decompose)
+            export(libs.essenty.lifecycle)
         }
     }
 
@@ -40,6 +43,7 @@ kotlin {
             implementation(libs.runtime)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+            implementation(libs.decompose.decompose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
